@@ -1,0 +1,61 @@
+
+
+Implemente la función 
+project_points( full_path_input_mesh, 
+optical_center_x, 
+optical_center_y, 
+optical_center_z, 
+optical_axis_x, 
+optical_axis_y, 
+optical_axis_z, 
+output_width_in_pixels, 
+output_height_in_pixels, 
+full_path_output ) 
+
+que toma una foto de los vértices presentes en la malla descrita en full_path_input_mesh. 
+Suposiciones: 
+- el centro óptico (es decir, el estenopeico) de la cámara se encuentra en optical_center 
+- la distancia entre el centro óptico y el plano de proyección es focal_distance 
+- el punto principal (es decir, la intersección entre el eje óptico y el plano de proyección) está perfectamente centrado en el sensor de proyección 
+- Supondremos que el agujero de alfiler está detrás del plano de proyección (esto es: una distancia focal positiva significa que el plano de proyección está más cerca del punto que se proyecta que una distancia focal negativa).
+- Usar opnecv para la creacion de la imagen.
+
+contenido de la malla de entrada en .off
+OFF
+34834 69451 0
+-20.9895 17.786 6.012 
+-27.9385 18.733 3.442 
+-51.1695 41.09 38.732 
+...
+-23.2035 43.466 -6.63 
+3 20463 20462 19669
+3 8845 8935 14299
+3 15446 12949 4984
+
+
+Parámetros 
+- full_path_input_mesh: ruta completa que contiene la malla de entrada. Solo se utilizarán los vértices (y sus colores) en este ejercicio. 
+- optical_center_{x, y, z}: parámetros que indican (en coordenadas mundiales) la posición del centro óptico de la cámara.
+- optical_axis_{x, y, z}: parámetros que indican (en coordenadas mundiales) la dirección del eje óptico. Observe que este vector es normal al plano de proyección. 
+- focal_distance: desde el centro óptico, una traslación de exactamente esta cantidad en la dirección dada por optical_axis llega a un punto en el plano de proyección (concretamente: en el punto principal. 
+- output_width_in_pixels: anchura de la salida, especificada en píxeles. 
+- output_height_in_pixels: altura de la salida, especificada en píxeles. 
+- full_path_output:  ruta completa de la salida.
+
+uso
+
+project_points(
+ full_path_input_mesh=sphere-rectangles.off,
+ optical_center_x=5.0,
+ optical_center_y=5.0,
+ optical_center_z=5.0,
+ optical_axis_x=0,
+ optical_axis_y=0,
+ optical_axis_z=-1.0,
+ output_width_in_pixels=1920,
+ output_height_in_pixels=1080,
+ full_path_output=projection-1.png
+ )
+
+g++ -o s solution.cpp `pkg-config --cflags --libs opencv4` && ./s
+
